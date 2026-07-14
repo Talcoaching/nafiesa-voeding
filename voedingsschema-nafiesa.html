@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voedingsschema Nafiesa - tal&coaching</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--green:#2D4A3E;--cream:#FDFBF3;--gold:#C97B1A;--teal:#2A7A8C;--muted:#6b7c76;--border:#ddd8cc;--white:#fff;--rose:#9B4F6A}
+body{background:var(--cream);font-family:'Nunito',sans-serif;font-size:14px;color:var(--green);line-height:1.7}
+.page-header{background:var(--green);padding:48px 24px 40px;text-align:center;position:relative}
+.page-header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--rose),var(--gold),var(--teal))}
+.page-header img{height:28px;filter:brightness(0) invert(1);margin-bottom:12px}
+h1{font-family:'Fraunces',serif;font-size:clamp(1.8rem,6vw,2.8rem);font-weight:900;color:#f7f5f0;line-height:1.1}
+h1 span{font-style:italic;color:var(--gold)}
+.sub{margin-top:10px;color:rgba(255,255,255,.45);font-size:13px}
+.pills{display:flex;justify-content:center;gap:8px;margin-top:18px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:30px;padding:5px 14px;font-size:11px;font-weight:700;color:rgba(255,255,255,.6)}
+.pill strong{color:var(--gold)}
+.container{max-width:700px;margin:0 auto;padding:0 16px 60px}
+.intro-card{margin:22px 0 0;background:var(--white);border:1px solid var(--border);border-left:4px solid var(--gold);border-radius:0 14px 14px 0;padding:16px 20px;font-size:14px;color:#3a3028;line-height:1.9}
+.macro-bar{margin:16px 0 0;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:18px 20px}
+.macro-title{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;margin-bottom:12px}
+.macro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.macro-item{text-align:center;padding:9px 4px;background:var(--cream);border-radius:10px;border:1px solid var(--border)}
+.macro-num{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:900;color:var(--green)}
+.macro-num.gold{color:var(--gold)}.macro-num.teal{color:var(--teal)}
+.macro-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:2px}
+.macro-bar-visual{height:7px;background:var(--border);border-radius:8px;overflow:hidden;display:flex;gap:2px}
+.bar-p{background:var(--green);border-radius:8px 0 0 8px}.bar-f{background:var(--gold)}.bar-k{background:var(--teal);border-radius:0 8px 8px 0}
+.macro-legend{display:flex;gap:12px;margin-top:6px}
+.macro-legend span{font-size:10px;font-weight:700}
+.tabs{display:flex;gap:6px;margin:22px 0 4px;position:sticky;top:0;background:var(--cream);padding:10px 0;z-index:50}
+.tab{flex:1;padding:10px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer}
+.tab.active{background:var(--green);border-color:var(--green);color:#fff}
+.day-pane{display:none}.day-pane.active{display:block}
+.meal{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:10px}
+.meal-header{padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.meal-header.ontbijt{background:var(--green)}.meal-header.lunch{background:var(--gold)}
+.meal-header.snack{background:var(--teal)}.meal-header.shake{background:var(--rose)}
+.meal-header.avond{background:var(--green)}
+.meal-name{font-family:'Fraunces',serif;font-size:.95rem;font-weight:700;color:#f7f5f0}
+.meal-kcal{font-size:11px;font-weight:800;color:rgba(255,255,255,.6)}
+.meal-body{padding:14px 16px}
+.meal-items{margin-bottom:10px}
+.meal-item{display:flex;align-items:flex-start;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border)}
+.meal-item:last-child{border-bottom:none}
+.item-name{font-size:13px;font-weight:600;color:var(--green)}
+.item-sub{font-size:11px;color:var(--muted);font-style:italic;margin-top:1px}
+.item-amount{font-size:12px;color:var(--muted);font-weight:600;white-space:nowrap;padding-left:10px;flex-shrink:0}
+.meal-macros{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.mm{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px}
+.mm-kcal{background:#edf2f0;color:var(--green)}.mm-p{background:#edf2f0;color:var(--green)}
+.mm-f{background:#fdf6ec;color:var(--gold)}.mm-k{background:#eef7f9;color:var(--teal)}
+.meal-tip{margin-top:8px;font-size:11px;color:var(--teal);font-style:italic;padding:5px 8px;background:#eef7f9;border-radius:7px;line-height:1.5}
+.totals-bar{background:var(--green);border-radius:12px;padding:13px 18px;display:flex;justify-content:space-between;align-items:center;margin:16px 0;flex-wrap:wrap;gap:8px}
+.tot-label{font-size:10px;font-weight:700;color:rgba(255,255,255,.5)}
+.tot-val{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:900;color:#f7f5f0}
+.tot-val.gold{color:var(--gold)}
+.footer{background:var(--green);color:rgba(255,255,255,.4);text-align:center;padding:18px;font-size:12px;margin-top:40px}
+</style>
+</head>
+<body>
+<div class="page-header">
+  <img src="data:image/png;base64,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" alt="tal&coaching">
+  <h1>Voedings<span>schema</span></h1>
+  <div class="sub">Nafiesa - 3 dagen structuur</div>
+  <div class="pills">
+    <div class="pill"><strong>~1450</strong> kcal/dag</div>
+    <div class="pill"><strong>120g</strong> eiwit</div>
+    <div class="pill"><strong>130g</strong> koolhydraten</div>
+    <div class="pill"><strong>50g</strong> vet</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="intro-card">
+    Nafiesa, toppertje! Eerste stappen zijn gezet en ik ben hier om jou verder te helpen met structuur opbouwen in een gestaag tempo. Het schema is nu nog beperkt in variatie, maar dat bouwen we uit zodra een basis hebben.<br><br>
+    Trust the proces and you got this 🤘
+  </div>
+
+  <div class="macro-bar">
+    <div class="macro-title">Dagelijkse streefwaarden</div>
+    <div class="macro-grid">
+      <div class="macro-item"><div class="macro-num">~1450</div><div class="macro-lbl">kcal</div></div>
+      <div class="macro-item"><div class="macro-num gold">120g</div><div class="macro-lbl">Eiwit</div></div>
+      <div class="macro-item"><div class="macro-num teal">130g</div><div class="macro-lbl">Koolhydr.</div></div>
+      <div class="macro-item"><div class="macro-num">50g</div><div class="macro-lbl">Vetten</div></div>
+    </div>
+    <div class="macro-bar-visual">
+      <div class="bar-p" style="width:33%"></div>
+      <div class="bar-f" style="width:31%"></div>
+      <div class="bar-k" style="width:36%"></div>
+    </div>
+    <div class="macro-legend">
+      <span style="color:var(--green)">Eiwit 33%</span>
+      <span style="color:var(--gold)">Vet 31%</span>
+      <span style="color:var(--teal)">Koolhydraten 36%</span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showDay(1)">Dag 1</button>
+    <button class="tab" onclick="showDay(2)">Dag 2</button>
+    <button class="tab" onclick="showDay(3)">Dag 3</button>
+  </div>
+
+  <!-- DAG 1 -->
+  <div class="day-pane active" id="day1">
+    <div class="meal"><div class="meal-header ontbijt"><div class="meal-name">Ontbijt</div><div class="meal-kcal">~360 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Havermout</div></div><span class="item-amount">60g</span></div>
+      <div class="meal-item"><div><div class="item-name">Halfvolle melk</div></div><span class="item-amount">200 ml</span></div>
+      <div class="meal-item"><div><div class="item-name">Banaan</div></div><span class="item-amount">half stuk</span></div>
+      <div class="meal-item"><div><div class="item-name">Eiwitpoeder</div><div class="item-sub">Erdoor roeren voor extra eiwit - elke smaak</div></div><span class="item-amount">15g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~360 kcal</span><span class="mm mm-p">E: 22g</span><span class="mm mm-f">V: 8g</span><span class="mm mm-k">K: 52g</span></div><div class="meal-tip">Havermout koken met melk geeft een voller gevoel dan met water. Even 3 minuten in de magnetron als je haast hebt.</div></div></div>
+
+    <div class="meal"><div class="meal-header lunch"><div class="meal-name">Lunch</div><div class="meal-kcal">~380 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Volkoren boterham</div></div><span class="item-amount">2 sneetjes</span></div>
+      <div class="meal-item"><div><div class="item-name">Kipfilet (kant-en-klaar uit pak)</div><div class="item-sub">Snelle optie - direct uit de koelkast</div></div><span class="item-amount">100g</span></div>
+      <div class="meal-item"><div><div class="item-name">Sla, tomaat, komkommer</div></div><span class="item-amount">vrij</span></div>
+      <div class="meal-item"><div><div class="item-name">Halvarine</div></div><span class="item-amount">10g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~380 kcal</span><span class="mm mm-p">E: 34g</span><span class="mm mm-f">V: 10g</span><span class="mm mm-k">K: 38g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header snack"><div class="meal-name">Tussendoor</div><div class="meal-kcal">~145 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Magere kwark</div></div><span class="item-amount">200g</span></div>
+      <div class="meal-item"><div><div class="item-name">Blauwe bessen of aardbeien</div></div><span class="item-amount">50g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~145 kcal</span><span class="mm mm-p">E: 20g</span><span class="mm mm-f">V: 1g</span><span class="mm mm-k">K: 14g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header avond"><div class="meal-name">Avondeten</div><div class="meal-kcal">~375 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Kipfilet</div></div><span class="item-amount">150g</span></div>
+      <div class="meal-item"><div><div class="item-name">Gekookte aardappelen</div></div><span class="item-amount">150g</span></div>
+      <div class="meal-item"><div><div class="item-name">Broccoli en wortelen</div></div><span class="item-amount">200g</span></div>
+      <div class="meal-item"><div><div class="item-name">Olijfolie</div></div><span class="item-amount">5g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~375 kcal</span><span class="mm mm-p">E: 36g</span><span class="mm mm-f">V: 7g</span><span class="mm mm-k">K: 30g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header shake"><div class="meal-name">Avondshake</div><div class="meal-kcal">~180 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Whey eiwitpoeder</div><div class="item-sub">Elke smaak, oplossen in melk</div></div><span class="item-amount">25g</span></div>
+      <div class="meal-item"><div><div class="item-name">Halfvolle melk</div></div><span class="item-amount">200 ml</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~180 kcal</span><span class="mm mm-p">E: 28g</span><span class="mm mm-f">V: 4g</span><span class="mm mm-k">K: 12g</span></div><div class="meal-tip">Als je geen shake wilt, vervang dan door 200g magere kwark. Zelfde eiwit, andere textuur.</div></div></div>
+
+    <div class="totals-bar"><div><div class="tot-label">Totaal kcal</div><div class="tot-val gold">~1440</div></div><div><div class="tot-label">Eiwit</div><div class="tot-val">~140g</div></div><div><div class="tot-label">Koolhydraten</div><div class="tot-val">~146g</div></div><div><div class="tot-label">Vet</div><div class="tot-val">~30g</div></div></div>
+  </div>
+
+  <!-- DAG 2 -->
+  <div class="day-pane" id="day2">
+    <div class="meal"><div class="meal-header ontbijt"><div class="meal-name">Ontbijt</div><div class="meal-kcal">~290 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Volkoren brood</div></div><span class="item-amount">2 sneetjes</span></div>
+      <div class="meal-item"><div><div class="item-name">Eieren (gebakken of gekookt)</div></div><span class="item-amount">2 stuks</span></div>
+      <div class="meal-item"><div><div class="item-name">Halfvolle melk (bij koffie of thee)</div></div><span class="item-amount">100 ml</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~290 kcal</span><span class="mm mm-p">E: 18g</span><span class="mm mm-f">V: 12g</span><span class="mm mm-k">K: 28g</span></div><div class="meal-tip">Eieren de avond van tevoren hardkoken bespaart tijd in de ochtend.</div></div></div>
+
+    <div class="meal"><div class="meal-header lunch"><div class="meal-name">Lunch</div><div class="meal-kcal">~340 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Volkoren wrap</div></div><span class="item-amount">1 stuk</span></div>
+      <div class="meal-item"><div><div class="item-name">Tonijn in water (uitgelekt)</div></div><span class="item-amount">100g</span></div>
+      <div class="meal-item"><div><div class="item-name">Komkommer en paprika</div></div><span class="item-amount">vrij</span></div>
+      <div class="meal-item"><div><div class="item-name">Lichte mayo</div></div><span class="item-amount">10g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~340 kcal</span><span class="mm mm-p">E: 30g</span><span class="mm mm-f">V: 9g</span><span class="mm mm-k">K: 34g</span></div><div class="meal-tip">Tonijn met mayo de avond van tevoren klaarmaken en bewaren in de koelkast. Wrap 's ochtends vullen gaat in 2 minuten.</div></div></div>
+
+    <div class="meal"><div class="meal-header snack"><div class="meal-name">Tussendoor</div><div class="meal-kcal">~235 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Ongezouten noten (gemengd of cashew)</div></div><span class="item-amount">25g</span></div>
+      <div class="meal-item"><div><div class="item-name">Appel</div></div><span class="item-amount">1 stuk</span></div>
+      <div class="meal-item"><div><div class="item-name">Magere kwark</div></div><span class="item-amount">100g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~235 kcal</span><span class="mm mm-p">E: 14g</span><span class="mm mm-f">V: 13g</span><span class="mm mm-k">K: 22g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header avond"><div class="meal-name">Avondeten</div><div class="meal-kcal">~395 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Mager rundergehakt (10% vet)</div></div><span class="item-amount">140g</span></div>
+      <div class="meal-item"><div><div class="item-name">Zilvervliesrijst (ongekookt)</div></div><span class="item-amount">60g</span></div>
+      <div class="meal-item"><div><div class="item-name">Groentemix (diepvries of vers)</div></div><span class="item-amount">200g</span></div>
+      <div class="meal-item"><div><div class="item-name">Olijfolie</div></div><span class="item-amount">5g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~395 kcal</span><span class="mm mm-p">E: 32g</span><span class="mm mm-f">V: 11g</span><span class="mm mm-k">K: 42g</span></div><div class="meal-tip">Diepvries groentemix is net zo gezond als vers en bespaart tijd. Gewoon direct in de pan.</div></div></div>
+
+    <div class="meal"><div class="meal-header shake"><div class="meal-name">Avondshake</div><div class="meal-kcal">~180 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Whey eiwitpoeder</div></div><span class="item-amount">25g</span></div>
+      <div class="meal-item"><div><div class="item-name">Halfvolle melk</div></div><span class="item-amount">200 ml</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~180 kcal</span><span class="mm mm-p">E: 28g</span><span class="mm mm-f">V: 4g</span><span class="mm mm-k">K: 12g</span></div></div></div>
+
+    <div class="totals-bar"><div><div class="tot-label">Totaal kcal</div><div class="tot-val gold">~1440</div></div><div><div class="tot-label">Eiwit</div><div class="tot-val">~122g</div></div><div><div class="tot-label">Koolhydraten</div><div class="tot-val">~138g</div></div><div><div class="tot-label">Vet</div><div class="tot-val">~49g</div></div></div>
+  </div>
+
+  <!-- DAG 3 -->
+  <div class="day-pane" id="day3">
+    <div class="meal"><div class="meal-header ontbijt"><div class="meal-name">Ontbijt</div><div class="meal-kcal">~290 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Fage Total 0% Griekse yoghurt</div><div class="item-sub">Hoog eiwit, laag vet - AH, Jumbo of Lidl</div></div><span class="item-amount">200g</span></div>
+      <div class="meal-item"><div><div class="item-name">Granola</div></div><span class="item-amount">30g</span></div>
+      <div class="meal-item"><div><div class="item-name">Aardbeien of frambozen</div></div><span class="item-amount">80g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~290 kcal</span><span class="mm mm-p">E: 20g</span><span class="mm mm-f">V: 5g</span><span class="mm mm-k">K: 38g</span></div><div class="meal-tip">Fage 0% is de beste keuze voor eiwit zonder extra vet. 's Avonds al klaarzetten in de koelkast met granola ernaast.</div></div></div>
+
+    <div class="meal"><div class="meal-header lunch"><div class="meal-name">Lunch</div><div class="meal-kcal">~260 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Volkoren brood</div></div><span class="item-amount">2 sneetjes</span></div>
+      <div class="meal-item"><div><div class="item-name">Huttenkase</div><div class="item-sub">Hoog in eiwit, smeuig alternatief voor kaas</div></div><span class="item-amount">120g</span></div>
+      <div class="meal-item"><div><div class="item-name">Radijs, komkommer, tomaat</div></div><span class="item-amount">vrij</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~260 kcal</span><span class="mm mm-p">E: 22g</span><span class="mm mm-f">V: 5g</span><span class="mm mm-k">K: 30g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header snack"><div class="meal-name">Tussendoor</div><div class="meal-kcal">~190 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Between reep</div><div class="item-sub">Elke smaak - makkelijk voor onderweg of op kantoor</div></div><span class="item-amount">1 reep (45g)</span></div>
+      <div class="meal-item"><div><div class="item-name">Magere kwark</div></div><span class="item-amount">100g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~190 kcal</span><span class="mm mm-p">E: 21g</span><span class="mm mm-f">V: 7g</span><span class="mm mm-k">K: 26g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header avond"><div class="meal-name">Avondeten</div><div class="meal-kcal">~420 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Zalm of witvis</div></div><span class="item-amount">170g</span></div>
+      <div class="meal-item"><div><div class="item-name">Zoete aardappel</div></div><span class="item-amount">150g</span></div>
+      <div class="meal-item"><div><div class="item-name">Spinazie en sperziebonen</div></div><span class="item-amount">200g</span></div>
+      <div class="meal-item"><div><div class="item-name">Olijfolie</div></div><span class="item-amount">5g</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~420 kcal</span><span class="mm mm-p">E: 38g</span><span class="mm mm-f">V: 14g</span><span class="mm mm-k">K: 32g</span></div></div></div>
+
+    <div class="meal"><div class="meal-header shake"><div class="meal-name">Avondshake</div><div class="meal-kcal">~180 kcal</div></div><div class="meal-body"><div class="meal-items">
+      <div class="meal-item"><div><div class="item-name">Whey eiwitpoeder</div></div><span class="item-amount">25g</span></div>
+      <div class="meal-item"><div><div class="item-name">Halfvolle melk</div></div><span class="item-amount">200 ml</span></div>
+    </div><div class="meal-macros"><span class="mm mm-kcal">~180 kcal</span><span class="mm mm-p">E: 28g</span><span class="mm mm-f">V: 4g</span><span class="mm mm-k">K: 12g</span></div></div></div>
+
+    <div class="totals-bar"><div><div class="tot-label">Totaal kcal</div><div class="tot-val gold">~1340</div></div><div><div class="tot-label">Eiwit</div><div class="tot-val">~129g</div></div><div><div class="tot-label">Koolhydraten</div><div class="tot-val">~138g</div></div><div><div class="tot-label">Vet</div><div class="tot-val">~35g</div></div></div>
+  </div>
+</div>
+
+<div class="footer">tal&coaching - voedingsschema op maat voor Nafiesa</div>
+
+<script>
+function showDay(n){
+  document.querySelectorAll('.day-pane').forEach((el,i)=>el.classList.toggle('active',i===n-1));
+  document.querySelectorAll('.tab').forEach((el,i)=>el.classList.toggle('active',i===n-1));
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
